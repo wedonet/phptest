@@ -1,0 +1,5 @@
+[28-Mar-2016 08:16:55 UTC] PHP Warning:  file_get_contents(./.git/objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904): failed to open stream: Permission denied in E:\iis\1616_hotelseller\bom.php on line 30
+[05-Apr-2016 01:47:10 UTC] PHP Warning:  file_get_contents(./.git/objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904): failed to open stream: Permission denied in E:\iis\1616_hotelseller\bom.php on line 30
+[15-Apr-2016 09:25:35 Asia/Shanghai] PHP Notice:  Undefined property: ClsMain::$user in E:\iis\1616_hotelseller\_inc\main.php on line 46
+[15-Apr-2016 09:25:35 Asia/Shanghai] PHP Notice:  Undefined property: ClsMain::$user in E:\iis\1616_hotelseller\_inc\cls_api.php on line 15
+[13-May-2016 18:05:02 Asia/Shanghai] PHP Notice:  Undefined index: act in E:\iis\1616_hotelseller\testlock.php on line 6

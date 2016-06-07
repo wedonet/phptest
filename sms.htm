@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>e家预定-找回密码</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="format-detection" content="telephone=no" />
+
+
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="apple-touch-icon-precomposed" href="appleicon.png"/>
+
+
+
+
+<link rel="stylesheet" href="/_template/m/gmu/reset.css?3" type="text/css" />
+<link rel="stylesheet" href="/_template/m/gmu/gmu.css?3" type="text/css" />
+
+<link rel="stylesheet" href="/_template/m/css/base.css?3" type="text/css" />
+<link rel="stylesheet" href="/_template/m/css/main.css?3" type="text/css" />
+<link rel="stylesheet" href="/_template/m/css/main_1.css?3" type="text/css" />
+<link rel="stylesheet" href="/_template/m/css/main_2.css?3" type="text/css" />
+<link rel="stylesheet" href="/_template/m/css/main_s.css?3" type="text/css" />
+<link rel="stylesheet" href="/_template/m/css/layout.css?3" type="text/css" />
+
+
+
+
+<script src="/_template/m/gmu/zepto.min.js?3"></script>
+<script src="/_template/m/gmu/gmu.min.js?3"></script>
+<script src="/_template/m/js/main.js?3"></script>
+
+<script src="/_template/m/js/json/json2.js?3"></script>
+
+</head><body>
+
+<!--工具栏-->
+<div class="header01">
+		<a href="javascript:history.back()" class="back fleft"></a>
+		<div class="citytop">找回密码</div>
+		<a class="home fright" href="/m/"></a>
+		<div class="clear"></div>
+</div>
+
+<div class="main">
+	<div class="blank">
+		<form method="post" action="searchpass_save.php" id="myform">
+
+			<ul class="loginul">
+				<li>
+					<input class="input01" maxlength="11" type="text" name="u_mobile" id="u_mobile" placeholder="请输入手机号码" />
+				</li>
+				<li>
+					<input class="input01 w50" type="text" name="smscodestr" placeholder="请输入手机验证码" />
+					<input class="r3" type="button" value="获取验证码" id="getsms" />
+				</li>
+
+				<li><input class="input01" type="password" name="u_pass" id="u_pass"  maxlength="20" placeholder="新密码（6至20位数字与字母组合）" /></li>
+				<li><input class="input01" type="password" name="u_pass2" id="u_pass2"  maxlength="20" placeholder="请再次输入新密码" /></li>
+			</ul>
+
+			<input class="btn btn3" type="submit" value="提 交" />
+
+		</form>
+	</div>
+</div>
+
+
+<script>
+	/*提交表单*/
+
+	var defaultsecond = 60; //默认多长时间可以发送
+	var second = defaultsecond;
+	var timer;
+
+
+	Zepto(function($) {
+		$('#getsms').on('click', function() {
+			var obj = $(this);
+
+			/*if 没填手机号， then 提示*/
+			if ('' == $('#u_mobile').val()) {
+				alert('请填写手机号码');
+				return false;
+			}
+
+			/*var href = '/api/m/service.php?mp=searchpass_send&u_mobile=' + $('#u_mobile').val();*/
+			var href = 'searchpass_send.php';
+
+
+			obj.attr('disabled', true);
+
+
+			$.ajax({
+				type: 'POST',
+				url: href,
+				data: {u_mobile: $('#u_mobile').val()},
+				dataType: 'json',
+				timeout: 2000,
+				success: function(json) {
+					//alert(json.success);
+					if ('y' == json.success) {
+						second = defaultsecond;
+						change();
+					} else {
+						errdialog(json.errmes);
+					}
+
+				},
+				error: function(xhr, type) {
+					//alert(xhr.responseText + '/' + type);
+					alert('Ajax error!' + xhr.responseText + '/' + type )
+				}
+			})
+
+
+
+		})
+
+		$('#myform').on('submit', function() {
+
+			j_p($(this), function(json) {
+
+				//保存成功，跳转到下一步
+				if ('y' == json.success)
+				{
+
+
+					var mess = '新密码保存成功';
+
+
+					//
+					mess += '三秒后转入登录页';
+
+					setTimeout(function() {
+						window.location.href = 'login.php';
+						;
+					}, 3000);
+
+					opdialog(mess);
+
+
+
+				}
+				else { //保存失败，显示失败信息
+					errdialog(json.errmes);
+				}
+			})
+			return false;
+		})
+
+
+
+
+	})
+
+
+	/*函数change*/
+	function change() {  //倒计时函数
+		second--;   //秒数递减
+
+		/*还有剩余时间*/
+		if (second > 0) {
+			$('#getsms').val(second + '秒后重新获取');
+			timer = setTimeout('change()', 1000);   //变化1秒/次
+		}
+		/*时间到了*/
+		else {
+			$('#getsms').val('获取验证码');
+
+			$('#getsms').removeAttr('disabled');
+
+			clearTimeout(timer);
+		}
+	}
+</script>
+
+
+</body>
+</html>
