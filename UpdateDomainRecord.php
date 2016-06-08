@@ -4,8 +4,7 @@ require_once('aliyunurl.php');
 
 $a['Action'] = 'DescribeDomainRecords';
 $a['DomainName'] = 'test.ejshendeng.com';
-$a['PageNumber'] = 1;
-$a['PageSize'] = 10;
+
 
 
 /* 
