@@ -1,45 +1,16 @@
 <?php
-
-/* 从阿里云获取域名列表 */
-
-ob_start();
-header('Content-Type:text/html; charset=UTF-8');
-//error_reporting(E_ALL & ~E_NOTICE);
-error_reporting(E_ALL);
-
-date_default_timezone_set("UTC");
-
-
+require_once('aliyunurl.php');
 
 
 $a['Action'] = 'DescribeDomainRecords';
-$a['DomainName'] = 'ejshendeng.com';
+$a['DomainName'] = 'test.ejshendeng.com';
+$a['PageNumber'] = 1;
+$a['PageSize'] = 10;
 
 
-$url = aliyurl($a);
-
-echo($url);
-
-
-$ch = curl_init();
-
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_HEADER, false);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //如果把这行注释掉的话，就会直接输出  
-$result = curl_exec($ch);
-curl_close($ch);
-
-print_r(json_decode($result, true));
-
-
-
-/* 生成访问阿里云的URL
- * 以数组形式传入参数
- * 例如： 
- * $a['Action'] = 'DescribeDomainRecords';
- * $a['DomainName'] = 'ejshendeng.com';
- * AccessKeyId，
- *  */
+/* 
+ * 修改阿里云解析记录
+ */
 
 function aliyurl($a) {
 
@@ -88,3 +59,4 @@ function aliyurl($a) {
 
     return $url;
 }
+

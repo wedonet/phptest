@@ -1,3 +1,3 @@
 <?php
 
-echo rawurlencode('：');
+echo rawurlencode(':');

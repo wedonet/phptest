@@ -34,7 +34,7 @@ $t .= '&Timestamp='. rawurlencode('2016-03-24T16:41:54Z');
 $t .= '&Version=2015-01-09';
 
 
-
+die(rawurlencode(':'));
 
 $s .= rawurlencode($t);
 
