@@ -7,39 +7,59 @@ header('Content-Type:text/html; charset=UTF-8');
 //error_reporting(E_ALL & ~E_NOTICE);
 error_reporting(E_ALL);
 
+
+
+
 /*url*/
 //http://alidns.aliyuncs.com/?Format=XML&AccessKeyId=testid&Action=DescribeDomainRecords&SignatureMethod=HMAC-SHA1&DomainName=example.com&SignatureNonce=f59ed6a9-83fc-473b-9cc6-99c95df3856e&SignatureVersion=1.0&Version=2015-01-09&Timestamp=2016-03-24T16:41:54Z
-    
- 
-/*排序后*/    
+
+
+/*排序后*/
 //http://alidns.aliyuncs.com/?AccessKeyId=testid&Action=DescribeDomainRecords&Format=XML&SignatureMethod=HMAC-SHA1&DomainName=example.com&SignatureNonce=f59ed6a9-83fc-473b-9cc6-99c95df3856e&SignatureVersion=1.0&Version=2015-01-09&Timestamp=2016-03-24T16:41:54Z
-    
+
 $s = 'GET';
 $s .= '&';
 $s .= rawurlencode('/');
 $s .= '&';
 
-$t = '';
-$t .= 'AccessKeyId=testid';
-$t .= '&Action=DescribeDomainRecords';
-$t .= '&DomainName=example.com';
-$t .= '&Format=XML';
-$t .= '&SignatureMethod=HMAC-SHA1';
-$t .= '&SignatureNonce=f59ed6a9-83fc-473b-9cc6-99c95df3856e';
-$t .= '&SignatureVersion=1.0';
 
-$t .= '&Timestamp='. rawurlencode('2016-03-24T16:41:54Z');
-
-
-$t .= '&Version=2015-01-09';
+$a['AccessKeyId'] = 'testid';
+$a['Action'] = 'DescribeDomainRecords';
+$a['DomainName'] = 'example.com';
+$a['Format'] = 'XML';
+$a['SignatureMethod'] = 'HMAC-SHA1';
+$a['SignatureNonce'] = 'f59ed6a9-83fc-473b-9cc6-99c95df3856e';
+$a['SignatureVersion'] = '1.0';
+$a['Timestamp'] = rawurlencode('2016-03-24T16:41:54Z');
+$a['Version'] = '2015-01-09';
 
 
+$t = aliyurl($a);
 
 
-$s .= rawurlencode($t);
+die($t);
+
+//$t = '';
+//$t .= 'AccessKeyId=testid';
+//$t .= '&Action=DescribeDomainRecords';
+//$t .= '&DomainName=example.com';
+//$t .= '&Format=XML';
+//$t .= '&SignatureMethod=HMAC-SHA1';
+//$t .= '&SignatureNonce=f59ed6a9-83fc-473b-9cc6-99c95df3856e';
+//$t .= '&SignatureVersion=1.0';
+//
+//$t .= '&Timestamp='. rawurlencode('2016-03-24T16:41:54Z');
+//
+//
+//$t .= '&Version=2015-01-09';
 
 
-    
+
+
+$s .= rawurlencode($a);
+
+
+
 echo $s;
 
 echo '<br />';
@@ -62,3 +82,12 @@ echo 'urlencode后'.  rawurlencode($b);
 
 
 
+
+function aliyurl($a){
+　　ksort($a);
+
+	$s = 'GET';
+$s .= '&';
+$s .= rawurlencode('/');
+$s .= '&';
+}
